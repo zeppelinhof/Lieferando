@@ -1,0 +1,139 @@
+async function includeHTML() {      //Funktion fügt Header in beliebige HTML-Datei ein.
+    let includeElements = document.querySelectorAll('[w3-include-html]');
+    for (let i = 0; i < includeElements.length; i++) {
+        const element = includeElements[i];
+        file = element.getAttribute("w3-include-html"); // "includes/header.html"
+        let resp = await fetch(file);
+        if (resp.ok) {
+            element.innerHTML = await resp.text();
+        } else {
+            element.innerHTML = 'Page not found';
+        }
+    }
+}
+
+menus = ['Pomm Döner', 'Drehspieß Rolle'];
+mealWith = ['Drehspießfleisch mit Pommes frites und Sauce', 'mit Drehspießfleisch, Salat und Sauce'];
+choiceOf = ['tbd','Wahl aus: mit Sauce, hausgemachter Tzatziki, ohne Sauce, mit Ananas, mit Artischocken und mehr.']
+prices = [6.50, 7.50];
+amounts = [0,0];
+
+
+function show(){
+    let shoppingcard = document.getElementById('shopping-card');
+    clearShoppingcard(shoppingcard);
+    let shoppingcardNotEmpty = false;
+    //load();
+
+
+    for (i=0; i<amounts.length; i++){           // Prüfen, ob Warenkorb leer
+        if(amounts[i] > 0){
+            shoppingcardNotEmpty = true;
+        }
+    }
+
+    if(shoppingcardNotEmpty === false){
+        shoppingcard.innerHTML += emptyShoppingcardTemplate();
+    }
+
+    let menuvar = document.getElementById('menus');
+
+    for(let i=0; i<menus.length; i++){
+        menuvar.innerHTML += /*html*/`
+            <div class="menu">
+                <div class="menuTitle_And_Plus">
+                    <h2>${menus[i]}</h2>
+                    <img onclick="add(${i})" src="icons/plus.png" class="plus">
+                </div>
+                <p>${mealWith[i]} <br> ${choiceOf[i]}</p>
+                <div class="singleprice">${prices[i].toFixed(2)} €</div>
+            </div>
+        `
+    }
+}
+
+function emptyShoppingcardTemplate(){
+    return /*html*/`
+        <div id='emptyshoppingcard'>
+            <img src="icons/wagen.png" class="wagen">
+            <h2>Fülle deinen Warenkorb</h2>
+            <p>Füge einige leckere Gerichte aus der Speisekarte hinzu und bestelle dein Essen.</p>
+        </div>
+    `
+}
+
+function FillShoppingcardTemplate(index){
+    return /*html*/`
+        <div class="sc" id='sc${index}'>
+            <div class="sc_menuFirstLine">
+                <div class="grid_amount" id='sc_amount${index}'>${amounts[index]}</div>
+                <div class="grid_menu" id='sc_menu${index}'>${menus[index]}</div>
+                <div class="grid_totalprice" id='sc_totalprice${index}'>${prices[index].toFixed(2)} €</div>
+            </div>
+
+            <div class="sc_menuSecondLine">
+                <img onclick="minus(${index})" src="icons/minus.png" class="sc_plus">
+                <img onclick="add(${index})" src="icons/plus.png" class="sc_plus">
+            </div>                        
+        </div>
+    `
+}
+
+
+function add(index){
+    amounts[index] = amounts[index] + 1;
+    save(index);
+    let shoppingcard = document.getElementById('shopping-card');
+    if(document.getElementById('emptyshoppingcard')){
+        document.getElementById('emptyshoppingcard').innerHTML = '';
+    }
+
+    if(amounts[index] === 1){                                               // wenn Menü noch nicht in Warenkorb dann hinzufügen 
+        shoppingcard.innerHTML += FillShoppingcardTemplate(index);
+    }
+
+    else{
+        document.getElementById('sc_amount'+index).innerHTML = amounts[index];
+        document.getElementById('sc_totalprice'+index).innerHTML = (amounts[index] * prices[index]).toFixed(2) + ' €';
+    }
+    
+}
+
+function minus(index){
+    amounts[index] = amounts[index] - 1;
+    save(index);
+    let shoppingcard = document.getElementById('shopping-card');
+
+    if(amounts[index] > 0){
+        document.getElementById('sc_amount'+index).innerHTML = amounts[index];
+        document.getElementById('sc_totalprice'+index).innerHTML = (amounts[index] * prices[index]).toFixed(2) + ' €';
+    }
+
+    else{
+        document.getElementById('sc'+index).innerHTML = '';
+    }
+
+}
+
+function clearShoppingcard(shoppingcard){
+    if(shoppingcard){
+        shoppingcard.innerHTML = '';
+    }    
+}
+
+// Funktionen zum Speichern 
+
+function save(index){
+    let amountAsText = JSON.stringify(amounts[index]);
+    localStorage.setItem(`Menge${index}`, amountAsText);
+}
+
+function load(){
+    for(let l=0; l<menus.length;l++){
+        let amountAsText = localStorage.getItem(`Menge${l}`);                        // Value zum Key aus Storage auslesen
+
+        if (amountAsText){
+            amounts[l] = JSON.parse(amountAsText);                                    // Value (noch Text) in (neues) Array umwandeln
+        }
+    }
+}

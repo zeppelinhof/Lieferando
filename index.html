@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Lobster&family=Raleway:wght@400;500&family=Roboto:wght@500&family=Viga&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+    <title>Lieferando
+
+    </title>
+</head>
+
+<body onload="includeHTML(); show()">
+
+    <!-- <img src="icons/rundRestaurant.png" class="rundRestaurant"> -->
+    <div w3-include-html="./header.html"></div>
+
+
+    <div class="contentEnveloping">
+        <div class="content">
+            <img src="img/pizza.jpg" class="image-of-menu hide-mobile">
+            <div class="textEnveloping">
+                <div class="restaurant-name">
+                    <div class="firstLine centerd">
+                        <h1 class="hide-mobile">Da Damiano Pizza Pasta Kebaphaus</h1>
+                        <div>
+                            <img src="icons/info.png" class="info">
+                            <img src="icons/herz.png" class="herz">
+                        </div>
+                    </div>
+                    <div class="secondLine centerd">
+                        <img src="icons/rate.png">
+                        <p class="hide-mobile">Der gemütliche Dönerladen um die Ecke in Niederbieber. Besuchen Sie auch
+                            unseren ruhigen Garten mit frischer Bachluft.</p>
+                    </div>
+                </div>
+                <div id="menus" class="menus">
+                    <h2 class="food-category centerd">Beliebt</h2>
+                </div>
+            </div>
+        </div>
+
+        <div id="shopping-card" class="shopping-card hide-mobile" >                                          <!-- Div Warenkorb Standard -->
+
+
+        </div>
+
+        <div id="paybuttonDiv" class="paybuttonDiv paybuttonMobil">                                                    <!-- Div Button Bezahlen -->
+
+        </div>
+
+        <div id="miniMaxiDiv" class="miniMaxiDiv d-none-if-big-screen">                         <!-- Div Button Minimieren/Maximieren -->
+
+        </div>
+
+        <div id="shoppingcardForMobileDiv" class="shoppingcardForMobileDiv d-none-if-big-screen">                         <!-- Div Warenkorb Mobil -->            
+        
+
+        </div>
+
+    </div>
+
+    <div id="dialog" class="dialog-bg d-none">                              <!-- Dialog Hamburger -->              
+        <div class="dialog">
+            <div class="dialog_firstLine">
+                <h2>Mein Account</h2><img onclick="closeDialog('dialog')" class="dialog_close" src="icons/close.png">
+            </div>
+            <div class="dialog_buttons">
+                <div class="dialog_btn grau">Anmelden</div>
+                <div class="dialog_btn orange">Account erstellen</div>
+            </div>
+
+            <table>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/1tasche.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Bestellungen</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/2herz.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Favoriten</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/3geschenk.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Punkte</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/4stempel.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Stempelkarten</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/6info.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Brauchst du Hilfe</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/7stern.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Geschenkkarten</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/8fahrer.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Fahrer werden</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <img src="icons/dialog/9business.png" class="dialog_icon">
+                    </td>
+                    <td>
+                        <p>Lieferando for business</p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div id="dialog_pay" class="dialog-bg d-none">                          <!-- Dialog Bezahlt -->       
+        <div class="dialog-pay">
+            <h1>Bezahlt ✔</h1>
+            <img onclick="closeDialogPay()" class="dialog_close" src="icons/close.png">
+        </div>
+    </div>
+
+
+
+</body>
+
+</html>

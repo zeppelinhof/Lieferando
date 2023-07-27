@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+
+        img {
+            height: 300px;
+            object-fit: cover;
+            object-position: center;
+            flex: 1;
+        }
+
+        .sidebar {
+            background-color: aqua;
+            width: 200px;
+            height: 100vh;
+            position: sticky;
+            top: 0;
+        }
+
+        .gelb {
+            background-color: yellow;
+            height: 500px;
+        }
+        .pink{
+            background-color: palevioletred;
+            height: 300px;
+        }
+
+        .grün{
+            background-color: green;
+            height: 300px;
+        }
+
+        .blau{
+            background-color: blue;
+            height: 300px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div style="display: flex;">
+        <div style="display: flex; flex-direction: column; width: 100%;">
+            <div class="gelb">Hier ist Text</div>
+            <div class="pink">Hier ist auch Text</div>
+            <div class="grün">Hier ist auch Text</div>
+            <div class="blau">Hier ist auch Text</div>
+        </div>
+        <div class="sidebar">Warenkorb</div>
+    </div>
+</body>
+
+</html>
