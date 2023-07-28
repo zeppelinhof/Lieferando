@@ -18,7 +18,7 @@ choiceOf = ['Wahl der Sauce: Ketchup, Mayo', 'Wahl aus: mit Sauce, hausgemachter
 prices = [6.50, 7.50, 11,5,10,5.5];
 totalMealPrices = [0, 0, 0, 0, 0, 0];
 amounts = [0, 0, 0, 0, 0, 0];
-let wagen = true;
+let wagen = false;
 
 
 function show() {
@@ -60,7 +60,7 @@ function menuTemplate(i){
 
 function RenderShoppingcard() {
     let shoppingcard = document.getElementById('shopping-card');
-    let shoppingcardForMobileDiv = document.getElementById('shoppingcardForMobileDiv');
+    let shoppingcardForMobileDiv = document.getElementById('dialog_warenkorb-mobil');
     shoppingcardNotEmpty = false;
     showSum = false;
     shoppingcard.innerHTML = '';
@@ -80,26 +80,11 @@ function RenderShoppingcard() {
         }
     }
 
-    if (showSum === true) {                            // Summen aufführen
-        let subtotal = 0;
-        let deliverycosts = 2;
-        for (let s = 0; s < totalMealPrices.length; s++) {
-            subtotal = subtotal + totalMealPrices[s];
-        }
-        shoppingcard.innerHTML += shoppingcardTemplate2(subtotal, deliverycosts);      //Summen in Warenkörbe normal und mobil
-        paybuttonDiv.innerHTML += /*html*/`                                             <!--Bezahlen Button bei mobil-->
-            <div class="paybutton-centerd">
-                <div onclick="openDialog('dialog_pay')" class="paybutton">Bezahlen (${(subtotal + deliverycosts).toFixed(2)} €)</div>   
-            </div>
-        `
-        miniMaxiDiv.innerHTML += /*html*/`                                              <!--minimize, maximize Button bei mobil-->
-            <img onclick="minimizeMaximize()" class="dialog_close" src="icons/wagen.png">                             
-        `
-        shoppingcardForMobileDiv.innerHTML += shoppingcardTemplate2(subtotal, deliverycosts);
-    }
+    showSumInSchoppingCard(shoppingcard);
 
     if (shoppingcardNotEmpty === false) {
         shoppingcard.innerHTML += emptyShoppingcardTemplate();
+        document.getElementById('shoppingcardForMobileDiv').classList.add('d-none')
     }
 }
 
@@ -158,6 +143,26 @@ function minus(index) {
     RenderShoppingcard();
 }
 
+function showSumInSchoppingCard(shoppingcard){
+    if (showSum === true) {                            // Summen aufführen
+        let subtotal = 0;
+        let deliverycosts = 2;
+        for (let s = 0; s < totalMealPrices.length; s++) {
+            subtotal = subtotal + totalMealPrices[s];
+        }
+        shoppingcard.innerHTML += shoppingcardTemplate2(subtotal, deliverycosts);      //Summen in Warenkörbe normal und mobil
+        paybuttonDiv.innerHTML += /*html*/`                                             <!--Bezahlen Button bei mobil-->
+            <div class="paybutton-centerd">
+                <div onclick="openDialog('dialog_pay')" class="paybutton">Bezahlen (${(subtotal + deliverycosts).toFixed(2)} €)</div>   
+            </div>
+        `
+        miniMaxiDiv.innerHTML += /*html*/`                                              <!--minimize, maximize Button bei mobil-->
+            <img onclick="minimizeMaximize('shoppingcardForMobileDiv')" class="wagen" src="icons/wagen.png">                             
+        `
+        // shoppingcardForMobileDiv.innerHTML += shoppingcardTemplate2(subtotal, deliverycosts);
+    }
+}
+
 // Hamburger-Menü Dialog
 
 function openDialog(dialog){
@@ -186,16 +191,18 @@ function clearAmounts_TotalMealPrices(){
 }
 
 
-function minimizeMaximize(){                        // Klick auf Wagen-Symbol ein-/ausblenden des Einkaufswagens
+function minimizeMaximize(dialog){                        // Klick auf Wagen-Symbol ein-/ausblenden des Einkaufswagens
     if(wagen===true){
-        document.getElementById('shoppingcardForMobileDiv').classList.add('d-none');
+        document.getElementById(dialog).classList.add('d-none');
         wagen = false;
     }
 
     else{
-        document.getElementById('shoppingcardForMobileDiv').classList.remove('d-none');
+        document.getElementById(dialog).classList.remove('d-none');
         wagen = true
     }
+
+    RenderShoppingcard();
 }
 
 
